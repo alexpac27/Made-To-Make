@@ -6,3 +6,7 @@
 body {
   padding-top: 56px;
 }
+
+.navbar-title {
+  color: rgba(0, 0, 0, 0.9);
+}
