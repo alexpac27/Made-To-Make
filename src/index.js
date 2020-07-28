@@ -1,3 +1,6 @@
+let addToy = false;
+
+
 document.addEventListener("DOMContentLoaded", ()=> {
     const cardBody = document.getElementsByClassName('card-body')
     const cardH = document.getElementsByClassName('card h-100')
@@ -5,7 +8,25 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const itemsContainer = document.getElementById("items-container")
     const itemsUrl = "http://localhost:3000/api/v1/items"
     const addButton = document.getElementById("add-button")
-    console.log(addButton)
+    const formDiv = document.querySelector('.col-lg-7')
+    const form = document.querySelector('form')
+   
+
+   
+
+    // HIDDEN FORM 
+
+    addButton.addEventListener("click", () => {
+      // hide & seek with the form
+      addToy = !addToy;
+      if (addToy) {
+        formDiv.style.display = "block";
+      } else {
+        formDiv.style.display = "none";
+      }
+    });
+
+    // END OF HIDDEN FORM
 
     function fetchItems(){
     fetch(itemsUrl)
@@ -34,6 +55,37 @@ document.addEventListener("DOMContentLoaded", ()=> {
         </div>`
         itemsContainer.append(itemCard)
     }
+
+
+    form.addEventListener("submit", (e) =>{
+        e.preventDefault();
+        // console.log("in event",form.name.value)
+        
+        fetch(itemsUrl,{
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                name: form.name.value,
+                description: form.description.value,
+                price: form.price.value,
+                image: form.image.value,
+                quantity: form.quantity.value,
+                user_id: 4
+
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            renderOneItem(data)
+            form.reset();
+        })
+        
+    })
+
+
 
     fetchItems()
 })
