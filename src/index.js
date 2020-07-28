@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const addButton = document.getElementById("add-button")
     const formDiv = document.querySelector('.col-lg-7')
     const form = document.querySelector('form')
-   
+    const myItemsBtn = document.querySelector('#my-items-button')
 
+    console.log(myItemsBtn)
    
 
     // HIDDEN FORM 
@@ -27,6 +28,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
     });
 
     // END OF HIDDEN FORM
+
+    // myItemsBtn.addEventListener("click", (e) => {
+    //     console.log(e.target)
+
+    // })
+
+    // function userItems()
 
     function fetchItems(){
     fetch(itemsUrl)
