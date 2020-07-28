@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const form = document.querySelector('form')
     const myItemsBtn = document.querySelector('#my-items-button')
 
+
     console.log(myItemsBtn)
    
 
@@ -29,12 +30,55 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     // END OF HIDDEN FORM
 
-    // myItemsBtn.addEventListener("click", (e) => {
-    //     console.log(e.target)
+    //MY ITEMS
+    myItemsBtn.addEventListener("click", (e) => {
+        fetch(itemsUrl)
+            .then(resp => resp.json())
+            .then(items => renderUserItems(items))
+    })
 
-    // })
+    function renderUserItems(items){
+        itemsContainer.innerHTML = ""
+        items.forEach(item => {
+            if (item.user_id === 1){
+                renderOneUserItem(item);
+            }
+        })
+    }
 
-    // function userItems()
+    function renderOneUserItem(item){
+        const itemCard = document.createElement("div")
+        itemCard.className = "col-md-4 mb-5"
+        itemCard.dataset.userId = `${item.user_id}` 
+        itemCard.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+             
+              <h2 class="card-title">${item.name}</h2>
+              <p class="card-text">${item.description}</p>
+              <p class="card-text">${item.price}</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
+              <a href="#" data-id=${item.id} id="delete-item-button" class="btn btn-primary btn-sm">Delete Item</a>
+            </div>
+          </div>`
+          itemsContainer.append(itemCard)
+          
+          const deleteBtn = document.querySelector('#delete-item-button')
+          deleteBtn.addEventListener("click", e => {
+            deleteItem(e);
+        })
+      }
+
+      function deleteItem (){
+          if (e.target.dataset.id === item.id)
+      }
+
+      
+
+      //END MY ITEMS
+    
 
     function fetchItems(){
     fetch(itemsUrl)
@@ -49,6 +93,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     function renderOneItem(item){
       const itemCard = document.createElement("div")
       itemCard.className = "col-md-4 mb-5"
+      itemCard.dataset.userId = `${item.user_id}` 
       itemCard.innerHTML = `
         <div class="card h-100">
           <div class="card-body">
@@ -81,7 +126,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 price: form.price.value,
                 image: form.image.value,
                 quantity: form.quantity.value,
-                user_id: 4
+                user_id: 1
 
             })
         })
