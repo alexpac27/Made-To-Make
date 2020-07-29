@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             <p class="card-text">${item.price}</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+            <a href="#/" data-item-id= ${item.id} class="btn btn-primary btn-sm">Add to Cart</a>
           </div>
         </div>`
         itemsContainer.append(itemCard)
@@ -196,7 +196,73 @@ document.addEventListener("DOMContentLoaded", ()=> {
     })
 
     //TOGGLE CART CODE
+
+    //Add to cart code 
+
+    document.addEventListener("click", e=>{
+        if(e.target.innerText === "Add to Cart"){
+            fetch(`${itemsUrl}/${e.target.dataset.itemId}`)
+                .then(resp => resp.json())
+                .then(item => fetchCart(item))
+        }
+    })
+
+    function fetchCart(item) {
+        fetch("http://localhost:3000/api/v1/cart_items/",{
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                item_id: item.id,
+                cart_id: 1
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => addToCart(data.item))
+    }
+
+    function addToCart(item){
+        const cartUl = document.getElementById("cart-drop-down")
+
+        const cartLi = document.createElement('li')
+        cartLi.innerHTML = `
+            <span class="item">
+                <span class="item-left">
+                    <span class="item-info">
+                        <span>${item.name}</span>
+                        <span>$ ${item.price}</span>
+                    </span>
+                </span>
+                <span class="item-right">
+                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                </span>
+            </span>
+        `
+        cartUl.prepend(cartLi)  
+    }
+
+    const dropDown = document.getElementById("cart-items-dropdown")
+    dropDown.addEventListener("click", e => {
+        if (e.target.dataset.toggle === "dropdown"){
+            renderCartItems()
+        }
+            
+    })
+
+    function renderCartItems(){
+        fetch("http://localhost:3000/api/v1/cart_items/")
+            .then(resp => resp.json())
+            .then(data => data.forEach(function(data){
+                addToCart(data.item)
+            }))
+    }
+
     
+    //Add to cart close 
+   
+    //<img src=${item.image} alt="" /> 
 
 
     fetchItems()
