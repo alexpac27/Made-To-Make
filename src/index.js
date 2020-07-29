@@ -59,15 +59,22 @@ document.addEventListener("DOMContentLoaded", ()=> {
               <p class="card-text">${item.price}</p>
             </div>
             <div class="card-footer">
-              <a href="#" id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
+              <a href="#" data-id=${item.id} id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
               <a href="#" data-id=${item.id} id="delete-item-button" class="btn btn-primary btn-sm">Delete Item</a>
             </div>
           </div>`
           itemsContainer.append(itemCard)
-
           itemCard.addEventListener("click", e => {
-              const id = e.target.dataset.id 
-              deleteItem(id)
+            if (e.target.id === "delete-item-button"){
+              const id = e.target.dataset.id
+              deleteItem(itemCard, id)
+              // console.log(itemCard, id)
+            }
+            if (e.target.id === "edit-item-button"){
+              const id = e.target.dataset.id
+              updateForm(item, itemCard, id)
+              // console.log(itemCard, id)
+            }
           })
           
           //const deleteBtn = document.querySelector('#delete-item-button')
@@ -76,16 +83,46 @@ document.addEventListener("DOMContentLoaded", ()=> {
         //})
       }
 
-       function deleteItem (item, itemCard){
-           console.log(item, itemCard)
-           fetch (`${itemsUrl}/${item.id}`,
-           {method: "DELETE"}
-           )
-           .then(resp => resp.json())
-           .then(itemCard.remove())
+       function deleteItem (itemCard, id){
+           fetch (`${itemsUrl}/${id}`,{
+           method: "DELETE"
+          })
+           itemCard.remove()
         }
        
+        function updateForm(item, itemCard, id){
+          <form>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Email address</label>
+              <input type="name" class="form-control" id="exampleFormControlInput1" value=`${item.name}`>
+             </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>
 
+        }
       
 
       //END MY ITEMS
