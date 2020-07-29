@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             <div class="card-body">
              
               <h2 class="card-title">${item.name}</h2>
+              <img src="${item.image}" alt="..." class="img-thumbnail">
               <p class="card-text">${item.description}</p>
               <p class="card-text">${item.price}</p>
             </div>
@@ -68,20 +69,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
             if (e.target.id === "delete-item-button"){
               const id = e.target.dataset.id
               deleteItem(itemCard, id)
-              // console.log(itemCard, id)
             }
             if (e.target.id === "edit-item-button"){
               const id = e.target.dataset.id
               updateForm(item, itemCard, id)
-              // console.log(itemCard, id)
             }
           })
-          
-          //const deleteBtn = document.querySelector('#delete-item-button')
-          //deleteBtn.addEventListener("click", e => {
-            //deleteItem(item, itemCard);
-        //})
-      }
+        }
 
        function deleteItem (itemCard, id){
            fetch (`${itemsUrl}/${id}`,{
@@ -91,38 +85,55 @@ document.addEventListener("DOMContentLoaded", ()=> {
         }
        
         function updateForm(item, itemCard, id){
-          <form>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Email address</label>
-              <input type="name" class="form-control" id="exampleFormControlInput1" value=`${item.name}`>
-             </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
-</form>
+          itemCard.innerHTML = `<div class="card h-100">
+          <div class="card-body">
+          <h3>Update Item:</h3>
+          <form id="update-item-form">
+          <input type="text" name="name" value="${item.name}" id = 'item-name' class="input-text"/>
+        <br />
+        <input type="text" name="image" value="${item.image}" id = 'item-image' class="input-text"/>
+        <br />
+        <input type="number" name="price" value="${item.price}" id = 'item-price' class="input-text"/>
+        <br />
+        <input type="text" name="description" value="${item.description}" id = 'item-description' class="input-text"/>
+        <br />
+        <input type="number" name="quantity" value="${item.quantity}" id = 'item-quantity' class="input-text"/>
+        <br />
+        <br />
+        <input type="submit" name="submit" id="submitButton" value="Update" class="submit"/>
+        </form>
+        </div>
+        </div>`
+         
+        const form = document.querySelector('#update-item-form')
+        form.addEventListener('submit', (e) =>{
+          
+          e.preventDefault();
 
+          fetch(`${itemsUrl}/${item.id}`,{
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                name: e.target.name.value,
+                description: e.target.description.value,
+                price: e.target.price.value,
+                image: e.target.image.value,
+                quantity: e.target.quantity.value,
+                user_id: 1
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => {
+          itemCard.remove()
+          renderOneUserItem(data)})
+
+        })
         }
+
+        
       
 
       //END MY ITEMS
@@ -147,6 +158,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
           <div class="card-body">
            
             <h2 class="card-title">${item.name}</h2>
+            <img src="${item.image}" alt="..." class="img-thumbnail">
             <p class="card-text">${item.description}</p>
             <p class="card-text">${item.price}</p>
           </div>
