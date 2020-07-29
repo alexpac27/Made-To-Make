@@ -64,16 +64,27 @@ document.addEventListener("DOMContentLoaded", ()=> {
             </div>
           </div>`
           itemsContainer.append(itemCard)
+
+          itemCard.addEventListener("click", e => {
+              const id = e.target.dataset.id 
+              deleteItem(id)
+          })
           
-          const deleteBtn = document.querySelector('#delete-item-button')
-          deleteBtn.addEventListener("click", e => {
-            deleteItem(e);
-        })
+          //const deleteBtn = document.querySelector('#delete-item-button')
+          //deleteBtn.addEventListener("click", e => {
+            //deleteItem(item, itemCard);
+        //})
       }
 
-      function deleteItem (){
-          if (e.target.dataset.id === item.id)
-      }
+       function deleteItem (item, itemCard){
+           console.log(item, itemCard)
+           fetch (`${itemsUrl}/${item.id}`,
+           {method: "DELETE"}
+           )
+           .then(resp => resp.json())
+           .then(itemCard.remove())
+        }
+       
 
       
 
