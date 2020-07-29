@@ -10,3 +10,9 @@ body {
 .navbar-title {
   color: rgba(0, 0, 0, 0.9);
 }
+
+/* CART CODE */
+
+#cart-drop-down{
+  width: 50%;
+}

@@ -13,6 +13,9 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+  
+  <!------ Include the above in your HEAD tag ---------->
+
   <!-- Custom styles for this template -->
   <link href="css/small-business.css" rel="stylesheet">
 
@@ -26,30 +29,46 @@
       <a class="navbar-title" href="#">Made to Make</a>
       <button type="button" id="add-button" class="btn btn-outline-light text-dark">Add Product</button>
       <button type="button" id="my-items-button" class="btn btn-outline-light text-dark">View My Items</button>
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button> -->
+      </button>
+      
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> 7 - Items<span class="caret"></span></a>
+              <ul id="cart-drop-down" class="dropdown-menu dropdown-cart" role="menu">
 
+
+                  <li>
+                      <span class="item">
+                        <span class="item-left">
+                            <!-- <img src="http://lorempixel.com/50/50/" alt="" /> -->
+                            <span class="item-info">
+                                <span>Item name</span>
+                                <span>23$</span>
+                            </span>
+                        </span>
+                        <span class="item-right">
+                            <button class="btn btn-xs btn-danger pull-right">x</button>
+                        </span>
+                    </span>
+                  </li>
+                  
+
+                  
+                  <li class="divider"></li>
+                  <li><a class="text-center" href="">View Cart</a></li>
+              </ul>
+          </ul>
+        </ul>
+    </div>
+  </nav> 
+
+  <!-- CART FLY OUT CODE -->
+
+  
   <!-- Page Content -->
   <div class="container">
 

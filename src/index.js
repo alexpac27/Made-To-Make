@@ -133,9 +133,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
         })
         }
 
-        
-      
-
       //END MY ITEMS
     
 
@@ -198,6 +195,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
         
     })
 
+    //TOGGLE CART CODE
+    
 
 
     fetchItems()
