@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const formDiv = document.querySelector('.col-lg-7')
     const form = document.querySelector('form')
     const myItemsBtn = document.querySelector('#my-items-button')
+    const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
 
-
-    console.log(myItemsBtn)
+    // console.log(myItemsBtn)
    
 
     // HIDDEN FORM 
@@ -205,10 +205,17 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 .then(resp => resp.json())
                 .then(item => fetchCart(item))
         }
+        if(e.target.id === "cart-delete"){
+          fetch(cartItemsUrl + e.target.dataset.id, {
+          method: "DELETE"
+          })
+          const li = e.target.closest("li")
+          li.remove()
+        }
     })
 
     function fetchCart(item) {
-        fetch("http://localhost:3000/api/v1/cart_items/",{
+        fetch(cartItemsUrl,{
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -225,7 +232,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     function addToCart(item){
         const cartUl = document.getElementById("cart-drop-down")
-
         const cartLi = document.createElement('li')
         cartLi.innerHTML = `
             <span class="item">
@@ -236,7 +242,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
                     </span>
                 </span>
                 <span class="item-right">
-                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                    <button data-id= ${item.id} id= "cart-delete" class="btn btn-xs btn-danger pull-right">x</button>
                 </span>
             </span>
         `
