@@ -196,30 +196,35 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     form.addEventListener("submit", (e) =>{
         e.preventDefault();
-        
-        fetch(itemsUrl,{
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                Accept: "application/json"
-            },
-            body: JSON.stringify({
-                name: form.name.value,
-                description: form.description.value,
-                price: form.price.value,
-                image: form.image.value,
-                quantity: form.quantity.value,
-                user_id: 1
+        if (form.name.value === "" || form.description.value === "" || form.price.value === "" || form.image.value === "" || form.quantity.value === ""){
+            alert("Please fill out all fields.")
+            return
+        } else {
+            fetch(itemsUrl,{
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify({
+                    name: form.name.value,
+                    description: form.description.value,
+                    price: form.price.value,
+                    image: form.image.value,
+                    quantity: form.quantity.value,
+                    user_id: 1
 
+                })
             })
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            renderOneUserItem(data)
-            form.reset();
-            formDiv.hidden = !formDiv.hidden
-            // alert(`Success! ${data.item.name} has been posted.`)
-        })  
+        
+            .then(resp => resp.json())
+            .then(data => {
+                renderOneUserItem(data)
+                form.reset();
+                formDiv.hidden = !formDiv.hidden
+                // alert(`Success! ${data.item.name} has been posted.`)
+            }) 
+        } 
     })
 
     //Purchase Event Listener
@@ -305,8 +310,15 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 </span>
             </span>
         `
-        cartUl.prepend(cartLi)  
+        cartUl.prepend(cartLi) 
+        // const totalSpan = document.getElementById("total-span") 
+        // totalSpan.innerText = totalCost()
+
+        // function totalCost(){
+
+        // }
     }
+
 
     const dropDown = document.getElementById("cart-items-dropdown")
     dropDown.addEventListener("click", e => {
