@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     form.removeAttribute("hidden")
     const myItemsBtn = document.querySelector('#my-items-button')
     const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
-
-    // console.log(myItemsBtn)
+    const purchaseLi = document.querySelector('#purchase-items')
+    
    
 
     // HIDDEN FORM 
@@ -29,18 +29,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
             formDiv.hidden = !formDiv.hidden
         })
       }
-
-
-    // TOY LAND
-
-    // function myFunction() {
-    //   var x = document.getElementById("myDIV");
-    //   if (x.style.display === "none") {
-    //     x.style.display = "block";
-    //   } else {
-    //     x.style.display = "none";
-    //   }
-    // }
 
 
     // END OF HIDDEN FORM
@@ -207,7 +195,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     form.addEventListener("submit", (e) =>{
         e.preventDefault();
-        // console.log("in event",form.name.value)
         
         fetch(itemsUrl,{
             method: "POST",
@@ -233,7 +220,14 @@ document.addEventListener("DOMContentLoaded", ()=> {
         
     })
 
-    //TOGGLE CART CODE
+    //Purchase Event Listener
+
+    purchaseLi.addEventListener('click', (e) =>{
+      e.preventDefault()
+      alert("Success! Your items have been purchased. Expect your items to arrive in 2-3 business days.")
+      const cartUl = document.getElementById("cart-drop-down")
+      // cartUl.innerHTML = ''
+    })
 
     //Add to cart code 
 
@@ -244,12 +238,14 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 .then(item => fetchCart(item))
         }
         if(e.target.id === "cart-delete"){
+
+          console.log(e.target)
           fetch(cartItemsUrl + e.target.dataset.id, {
           method: "DELETE"
           })
           const li = e.target.closest("li")
           li.remove()
-        }
+         }
     })
 
     function fetchCart(item) {
@@ -265,22 +261,23 @@ document.addEventListener("DOMContentLoaded", ()=> {
             })
         })
         .then(resp => resp.json())
-        .then(data => addToCart(data.item))
+        .then(data => addToCart(data))
     }
 
-    function addToCart(item){
+    function addToCart(data){
         const cartUl = document.getElementById("cart-drop-down")
         const cartLi = document.createElement('li')
+        cartLi.classList += "li-cart-item"
         cartLi.innerHTML = `
             <span class="item">
                 <span class="item-left">
                     <span class="item-info">
-                        <span>${item.name}</span>
-                        <span>$ ${item.price}</span>
+                        <span>${data.item.name}</span>
+                        <span>$ ${data.item.price}</span>
                     </span>
                 </span>
                 <span class="item-right">
-                    <button data-id= ${item.id} id= "cart-delete" class="btn btn-xs btn-danger pull-right">x</button>
+                    <button data-id= ${data.id} id= "cart-delete" class="btn btn-xs btn-danger pull-right">x</button>
                 </span>
             </span>
         `
@@ -299,14 +296,12 @@ document.addEventListener("DOMContentLoaded", ()=> {
         fetch("http://localhost:3000/api/v1/cart_items/")
             .then(resp => resp.json())
             .then(data => data.forEach(function(data){
-                addToCart(data.item)
+                addToCart(data)
             }))
     }
 
     
-    //Add to cart close 
-   
-    //<img src=${item.image} alt="" /> 
+  
 
 
     fetchItems()
