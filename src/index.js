@@ -226,8 +226,27 @@ document.addEventListener("DOMContentLoaded", ()=> {
       e.preventDefault()
       alert("Success! Your items have been purchased. Expect your items to arrive in 2-3 business days.")
       const cartUl = document.getElementById("cart-drop-down")
+      fetchDeleteCartItems()
       // cartUl.innerHTML = ''
     })
+
+    function fetchDeleteCartItems(){
+      fetch(cartItemsUrl)
+      .then(resp => resp.json())
+      .then(cartItems => deleteEachCartItem(cartItems))
+    }
+
+    function deleteEachCartItem(cartItems){
+      cartItems.forEach(cartItem => 
+        deleteItems(cartItem))
+    }
+
+    function deleteItems(cartItem){
+      fetch(cartItemsUrl + cartItem.id, {
+        method: "DELETE"
+      })
+      
+    }
 
     //Add to cart code 
 
