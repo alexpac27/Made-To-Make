@@ -1,4 +1,4 @@
-let addToy = false;
+//let addProduct = false;
 
 
 document.addEventListener("DOMContentLoaded", ()=> {
@@ -18,15 +18,18 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     // HIDDEN FORM 
 
-    addButton.addEventListener("click", () => {
-      // hide & seek with the form
-      addToy = !addToy;
-      if (addToy) {
-        formDiv.style.display = "block";
-      } else {
-        formDiv.style.display = "none";
-      }
-    });
+    function addButtonListener () {
+        const addButton = document.getElementById("add-button")
+        let addProduct = false;
+        addButton.addEventListener("click", () => {
+            addProduct = !addProduct;
+            if (addProduct) {
+                formDiv.style.display = "block";
+            } else {
+                formDiv.style.display = "none";
+            }
+            });
+        }
 
     // END OF HIDDEN FORM
 
@@ -34,8 +37,22 @@ document.addEventListener("DOMContentLoaded", ()=> {
     myItemsBtn.addEventListener("click", (e) => {
         fetch(itemsUrl)
             .then(resp => resp.json())
-            .then(items => renderUserItems(items))
+            .then(items => {
+                renderUserItems(items)
+                renderAddItemButton()
+                addButtonListener()
+            })
     })
+
+    function renderAddItemButton(){
+        const navBar = document.getElementById("nav-bar-container")
+        const addItemButton = document.createElement("button")
+        addItemButton.type = "button"
+        addItemButton.id = "add-button"
+        addItemButton.className = "btn btn-outline-light text-dark"
+        addItemButton.innerText = "Add Product"
+        navBar.insertBefore(addItemButton, myItemsBtn)
+    }
 
     function renderUserItems(items){
         itemsContainer.innerHTML = ""
