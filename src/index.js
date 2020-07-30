@@ -83,7 +83,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
               <h2 class="card-title">${item.name}</h2>
               <img src="${item.image}" alt="..." class="img-thumbnail">
               <p class="card-text">${item.description}</p>
-              <p class="card-text">${item.price}</p>
+              <p class="card-text">Quantity: ${item.quantity}</p>
+              <p class="card-text">$${item.price}</p>
             </div>
             <div class="card-footer">
               <a href="#" data-id=${item.id} id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
@@ -183,7 +184,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             <h2 class="card-title">${item.name}</h2>
             <img src="${item.image}" alt="..." class="img-thumbnail">
             <p class="card-text">${item.description}</p>
-            <p class="card-text">${item.price}</p>
+            <p class="card-text">$${item.price}</p>
           </div>
           <div class="card-footer">
             <a href="#/" data-item-id= ${item.id} class="btn btn-primary btn-sm">Add to Cart</a>
@@ -214,10 +215,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
         })
         .then(resp => resp.json())
         .then(data => {
-            renderOneItem(data)
+            renderOneUserItem(data)
             form.reset();
-        })
-        
+            formDiv.hidden = !formDiv.hidden
+            // alert(`Success! ${data.item.name} has been posted.`)
+        })  
     })
 
     //Purchase Event Listener
@@ -245,7 +247,10 @@ document.addEventListener("DOMContentLoaded", ()=> {
       fetch(cartItemsUrl + cartItem.id, {
         method: "DELETE"
       })
-      render
+      
+        const cartUl = document.getElementById("cart-drop-down")
+        cartUl.innerHTML = "No items in cart."
+      
     }
 
     //Add to cart code 
