@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
       fetch(cartItemsUrl + cartItem.id, {
         method: "DELETE"
       })
-      
+      render
     }
 
     //Add to cart code 
