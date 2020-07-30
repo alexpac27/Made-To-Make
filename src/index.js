@@ -1,4 +1,5 @@
-//let addProduct = false;
+// let addProduct = false;
+
 
 
 document.addEventListener("DOMContentLoaded", ()=> {
@@ -8,8 +9,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const itemsContainer = document.getElementById("items-container")
     const itemsUrl = "http://localhost:3000/api/v1/items"
     const addButton = document.getElementById("add-button")
+    addButton.hidden = true
     const formDiv = document.querySelector('.col-lg-7')
+    formDiv.hidden = true
     const form = document.querySelector('form')
+    form.removeAttribute("hidden")
     const myItemsBtn = document.querySelector('#my-items-button')
     const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
 
@@ -20,28 +24,45 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     function addButtonListener () {
         const addButton = document.getElementById("add-button")
-        let addProduct = false;
+        // let addProduct = false;
         addButton.addEventListener("click", () => {
-            addProduct = !addProduct;
-            if (addProduct) {
-                formDiv.style.display = "block";
-            } else {
-                formDiv.style.display = "none";
-            }
-            });
-        }
+            formDiv.hidden = !formDiv.hidden
+        })
+      }
+
+
+    // TOY LAND
+
+    // function myFunction() {
+    //   var x = document.getElementById("myDIV");
+    //   if (x.style.display === "none") {
+    //     x.style.display = "block";
+    //   } else {
+    //     x.style.display = "none";
+    //   }
+    // }
+
 
     // END OF HIDDEN FORM
 
     //MY ITEMS
     myItemsBtn.addEventListener("click", (e) => {
+      if (e.target.innerText === "View My Items"){
         fetch(itemsUrl)
             .then(resp => resp.json())
             .then(items => {
                 renderUserItems(items)
-                renderAddItemButton()
                 addButtonListener()
-            })
+                myItemsBtn.innerText = "View All Items"
+                addButton.hidden = !addButton.hidden
+                // renderAddItemButton()
+            })}
+            if (e.target.innerText === "View All Items"){
+              itemsContainer.innerHTML = ''
+              myItemsBtn.innerText = "View My Items"
+              addButton.hidden = !addButton.hidden
+              fetchItems()
+            }
     })
 
     function renderAddItemButton(){

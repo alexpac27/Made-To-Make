@@ -26,9 +26,10 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
     <div id="nav-bar-container" class="container">
+      
       <a class="navbar-title" href="#">Made to Make</a>
-      <!--<button type="button" id="add-button" class="btn btn-outline-light text-dark">Add Product</button>-->
       <button type="button" id="my-items-button" class="btn btn-outline-light text-dark">View My Items</button>
+      <button type="button" id="add-button" class="btn btn-outline-light text-dark">Add Product</button>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -57,7 +58,7 @@
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
         <!-- <img class="img-fluid rounded mb-4 mb-lg-0" src="http://placehold.it/900x400" alt=""> -->
-        <form class="add-item-form">
+        <form class="add-item-form" hidden="hidden">
           <h3>Create a item!</h3>
           <input type="text" name="name" value="" id = 'item-name' placeholder="Enter a item's name..." class="input-text"/>
           <br />
