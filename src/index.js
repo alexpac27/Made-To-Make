@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
               <p class="card-text"><b>$${item.price}</b></p>
             </div>
             <div class="card-footer">
-              <a href="#" data-id=${item.id} id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
-              <a href="#" data-id=${item.id} id="delete-item-button" class="btn btn-primary btn-sm">Delete Item</a>
+              <a href="#/" data-id=${item.id} id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
+              <a href="#/" data-id=${item.id} id="delete-item-button" class="btn btn-primary btn-sm">Delete Item</a>
             </div>
           </div>`
           itemsContainer.append(itemCard)
