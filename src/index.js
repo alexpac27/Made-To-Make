@@ -20,6 +20,10 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const totalSpan = document.getElementById("total-span") 
     let totalCost = []
 
+    const hTitle = document.getElementById("h1-title")
+    const pDescription = document.getElementById("p-description")
+    hTitle.hidden = true
+
     
    
 
@@ -48,12 +52,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 //addButtonListener()
                 myItemsBtn.innerText = "View All Items"
                 addButton.hidden = !addButton.hidden
+                pDescription.textContent = "All of your posted items are listed below.  Click Add Product to add a product to you store, or edit your items below."
+                hTitle.hidden = !hTitle.hidden
                 // renderAddItemButton()
             })}
             if (e.target.innerText === "View All Items"){
               itemsContainer.innerHTML = ''
               myItemsBtn.innerText = "View My Items"
               addButton.hidden = !addButton.hidden
+              hTitle.hidden = !hTitle.hidden
+              pDescription.textContent = "A collaborative project that supports authentic Native American artisans who create handcrafted pieces.  Our marketplace represents a diverse group of indigenous artists from around the world highlighting their unique cultures through their artform."
               fetchItems()
             }
     })
