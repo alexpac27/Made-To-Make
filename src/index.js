@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const myItemsBtn = document.querySelector('#my-items-button')
     const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
     const purchaseLi = document.querySelector('#purchase-items')
+    const totalSpan = document.getElementById("total-span") 
+    const totalCost = []
     
    
 
@@ -53,15 +55,15 @@ document.addEventListener("DOMContentLoaded", ()=> {
             }
     })
 
-    function renderAddItemButton(){
-        const navBar = document.getElementById("nav-bar-container")
-        const addItemButton = document.createElement("button")
-        addItemButton.type = "button"
-        addItemButton.id = "add-button"
-        addItemButton.className = "btn btn-outline-light text-dark"
-        addItemButton.innerText = "Add Product"
-        navBar.insertBefore(addItemButton, myItemsBtn)
-    }
+    // function renderAddItemButton(){
+    //     const navBar = document.getElementById("nav-bar-container")
+    //     const addItemButton = document.createElement("button")
+    //     addItemButton.type = "button"
+    //     addItemButton.id = "add-button"
+    //     addItemButton.className = "btn btn-outline-light text-dark"
+    //     addItemButton.innerText = "Add Product"
+    //     navBar.insertBefore(addItemButton, myItemsBtn)
+    // }
 
     function renderUserItems(items){
         itemsContainer.innerHTML = ""
@@ -244,8 +246,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     }
 
     function deleteEachCartItem(cartItems){
-      cartItems.forEach(cartItem => 
-        deleteItems(cartItem))
+      cartItems.forEach(cartItem => {
+        deleteItems(cartItem)})
     }
 
     function deleteItems(cartItem){
@@ -311,13 +313,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
             </span>
         `
         cartUl.prepend(cartLi) 
-        // const totalSpan = document.getElementById("total-span") 
-        // totalSpan.innerText = totalCost()
+        
+        totalCost.push(data.item.price)
+        totalCostFun()
+      }
 
-        // function totalCost(){
-
-        // }
-    }
+      function totalCostFun(){
+        totalSpan.innerText = totalCost.reduce(function(total, batches){
+          return batches + total
+          },0)
+      }
 
 
     const dropDown = document.getElementById("cart-items-dropdown")
