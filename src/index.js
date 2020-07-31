@@ -1,4 +1,3 @@
-// let addProduct = false;
 
 
 
@@ -13,36 +12,40 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const formDiv = document.querySelector('.col-lg-7')
     formDiv.hidden = true
     const form = document.querySelector('form')
-    form.removeAttribute("hidden")
+    //form.removeAttribute("hidden")
+    form.hidden = true 
     const myItemsBtn = document.querySelector('#my-items-button')
     const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
     const purchaseLi = document.querySelector('#purchase-items')
     const totalSpan = document.getElementById("total-span") 
     const totalCost = []
+
     
    
 
     // HIDDEN FORM 
 
-    function addButtonListener () {
-        const addButton = document.getElementById("add-button")
-        // let addProduct = false;
-        addButton.addEventListener("click", () => {
+    //function addButtonListener () {
+        //const addButton = document.getElementById("add-button")
+        addButton.addEventListener("click", (e) => {
             formDiv.hidden = !formDiv.hidden
+            form.hidden = !form.hidden
+            console.log(e.target)
+
         })
-      }
+      //}
 
 
     // END OF HIDDEN FORM
 
     //MY ITEMS
     myItemsBtn.addEventListener("click", (e) => {
-      if (e.target.innerText === "View My Items"){
+      if (e.target.innerText === "View My Items"){ 
         fetch(itemsUrl)
             .then(resp => resp.json())
             .then(items => {
                 renderUserItems(items)
-                addButtonListener()
+                //addButtonListener()
                 myItemsBtn.innerText = "View All Items"
                 addButton.hidden = !addButton.hidden
                 // renderAddItemButton()
