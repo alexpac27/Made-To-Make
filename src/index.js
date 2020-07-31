@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const cartItemsUrl = "http://localhost:3000/api/v1/cart_items/"
     const purchaseLi = document.querySelector('#purchase-items')
     const totalSpan = document.getElementById("total-span") 
-    const totalCost = []
+    let totalCost = []
 
     
    
@@ -87,9 +87,10 @@ document.addEventListener("DOMContentLoaded", ()=> {
              
               <h2 class="card-title">${item.name}</h2>
               <img src="${item.image}" alt="..." class="img-thumbnail">
+              <p></p>
               <p class="card-text">${item.description}</p>
               <p class="card-text">Quantity: ${item.quantity}</p>
-              <p class="card-text">$${item.price}</p>
+              <p class="card-text"><b>$${item.price}</b></p>
             </div>
             <div class="card-footer">
               <a href="#" data-id=${item.id} id="edit-item-button" class="btn btn-primary btn-sm">Edit Item</a>
@@ -188,8 +189,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
            
             <h2 class="card-title">${item.name}</h2>
             <img src="${item.image}" alt="..." class="img-thumbnail">
+            <p></p>
             <p class="card-text">${item.description}</p>
-            <p class="card-text">$${item.price}</p>
+            <p class="card-text"><b>$${item.price}</b></p>
           </div>
           <div class="card-footer">
             <a href="#/" data-item-id= ${item.id} class="btn btn-primary btn-sm">Add to Cart</a>
@@ -272,13 +274,14 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 .then(item => fetchCart(item))
         }
         if(e.target.id === "cart-delete"){
-
-          console.log(e.target)
+          console.log(typeof e.target.dataset.id)
           fetch(cartItemsUrl + e.target.dataset.id, {
           method: "DELETE"
           })
           const li = e.target.closest("li")
           li.remove()
+          totalCost = totalCost.filter(data => data.id != e.target.dataset.id)
+          totalCostFun()
          }
     })
 
@@ -316,22 +319,25 @@ document.addEventListener("DOMContentLoaded", ()=> {
             </span>
         `
         cartUl.prepend(cartLi) 
-        
-        totalCost.push(data.item.price)
+
+        totalCost.push(data)   
+        //totalCost.push(data.item.price)
         totalCostFun()
       }
 
       function totalCostFun(){
-        totalSpan.innerText = totalCost.reduce(function(total, batches){
-          return batches + total
+        console.log(totalCost)
+        totalSpan.innerText = totalCost.reduce(function(total, data){
+          return data.item.price + total
           },0)
       }
 
 
     const dropDown = document.getElementById("cart-items-dropdown")
+    console.log(dropDown)
     dropDown.addEventListener("click", e => {
         if (e.target.dataset.toggle === "dropdown"){
-            renderCartItems()
+          renderCartItems()
         }
             
     })
