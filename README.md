@@ -16,3 +16,6 @@ An eCommerce platform showcasing the handcrafted works of Native American artisa
 - JavaScript frontend
 - Ruby Rails backend and API
 - Bootstrap CSS framework
+
+# Credit
+This project was created in partnership with the incredibly talented @aromsa and @aaltmark.
