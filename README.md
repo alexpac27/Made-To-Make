@@ -19,3 +19,5 @@ An eCommerce platform showcasing the handcrafted works of Native American artisa
 
 # Credit
 This project was created in partnership with the incredibly talented @aromsa and @aaltmark.
+
+The items used for this project are authentic craft pieces created by Native American artists from around the United States. Their work can be found at The Indian Craft Shop (https://www.indiancraftshop.com/).
